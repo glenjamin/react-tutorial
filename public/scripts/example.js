@@ -98,22 +98,32 @@ var CommentList = React.createClass({
 });
 
 var CommentForm = React.createClass({
+  getInitialState() {
+    return { user: '', text: '' };
+  },
   handleSubmit: function(e) {
     e.preventDefault();
-    var author = React.findDOMNode(this.refs.author).value.trim();
-    var text = React.findDOMNode(this.refs.text).value.trim();
+    var author = this.state.name.trim();
+    var text = this.state.text.trim();
     if (!text || !author) {
       return;
     }
     this.props.onCommentSubmit({author: author, text: text});
-    React.findDOMNode(this.refs.author).value = '';
-    React.findDOMNode(this.refs.text).value = '';
+    this.setState(this.getInitialState());
   },
   render: function() {
     return (
       <form className="commentForm" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Your name" ref="author" />
-        <input type="text" placeholder="Say something..." ref="text" />
+        <input
+          type="text" placeholder="Your name"
+          value={this.state.name}
+          onChange={e => this.setState({ name: e.target.value })}
+        />
+        <input
+          type="text" placeholder="Say something..."
+          value={this.state.text}
+          onChange={e => this.setState({ text: e.target.value })}
+        />
         <input type="submit" value="Post" />
       </form>
     );
