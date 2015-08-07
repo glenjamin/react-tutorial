@@ -99,11 +99,11 @@ var CommentList = React.createClass({
 
 var CommentForm = React.createClass({
   getInitialState() {
-    return { user: '', text: '' };
+    return { author: '', text: '' };
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    var author = this.state.name;
+    var author = this.state.author;
     var text = this.state.text;
     if (!text || !author) {
       return;
@@ -116,9 +116,9 @@ var CommentForm = React.createClass({
       <form className="commentForm" onSubmit={this.handleSubmit}>
         <input
           type="text" placeholder="Your name"
-          value={this.state.name}
+          value={this.state.author}
           onChange={e => this.setState({
-            name: e.target.value.trim()
+            author: e.target.value.trim()
           })}
         />
         <input
@@ -129,6 +129,14 @@ var CommentForm = React.createClass({
           })}
         />
         <input type="submit" value="Post" />
+        {(this.state.author || this.state.text) &&
+          <div>
+            <h3>Preview</h3>
+            <Comment author={this.state.author}>
+              {this.state.text}
+            </Comment>
+          </div>}
+
       </form>
     );
   }
