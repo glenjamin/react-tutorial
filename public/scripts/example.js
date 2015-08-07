@@ -103,8 +103,8 @@ var CommentForm = React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    var author = this.state.name.trim();
-    var text = this.state.text.trim();
+    var author = this.state.name;
+    var text = this.state.text;
     if (!text || !author) {
       return;
     }
@@ -117,12 +117,16 @@ var CommentForm = React.createClass({
         <input
           type="text" placeholder="Your name"
           value={this.state.name}
-          onChange={e => this.setState({ name: e.target.value })}
+          onChange={e => this.setState({
+            name: e.target.value.trim()
+          })}
         />
         <input
           type="text" placeholder="Say something..."
           value={this.state.text}
-          onChange={e => this.setState({ text: e.target.value })}
+          onChange={e => this.setState({
+            text: e.target.value.trim()
+          })}
         />
         <input type="submit" value="Post" />
       </form>
